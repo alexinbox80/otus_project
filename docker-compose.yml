@@ -127,6 +127,7 @@ services:
             - net
 
     symfony_supervisor:
+        image: php:8.3-cli-alpine
         build: docker/supervisor
         container_name: 'symfony_supervisor'
         volumes:
