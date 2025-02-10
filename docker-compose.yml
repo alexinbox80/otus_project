@@ -126,6 +126,17 @@ services:
         networks:
             - net
 
+    symfony_supervisor:
+        build: docker/supervisor
+        container_name: 'symfony_supervisor'
+        volumes:
+            - ./:/app
+            - ./docker/supervisor/supervisord.conf:/etc/supervisor/supervisord.conf
+        working_dir: /app
+        command: [ "supervisord", "-c", "/etc/supervisor/supervisord.conf" ]
+        networks:
+            - net
+
 #Docker Networks
 networks:
     net:
