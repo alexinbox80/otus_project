@@ -4,6 +4,7 @@ namespace App\Domain\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Table(name: '`email_user`')]
 #[ORM\Entity]
@@ -11,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class EmailUser extends User
 {
     #[ORM\Column(type: 'string', nullable: false)]
+    #[Groups(['elastica'])]
     private string $email;
 
     public function getEmail(): string

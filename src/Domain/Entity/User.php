@@ -26,7 +26,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
+//use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 
 #[ORM\Table(name: '`user`')]
@@ -64,17 +65,20 @@ class User implements EntityInterface, SoftDeleteableInterface, SoftDeleteableIn
     #[ORM\Column(name: 'id', type: 'bigint', unique: true)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Groups(['elastica'])]
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 32, nullable: false)]
-    #[Groups(['subscription:get'])]
+//    #[Groups(['subscription:get'])]
+    #[Groups(['elastica'])]
     private string $login;
 
     #[ORM\Column(type: 'string', nullable: false)]
     private string $password;
 
     #[ORM\Column(type: 'integer', nullable: false)]
-    #[Groups(['subscription:get'])]
+//    #[Groups(['subscription:get'])]
+    #[Groups(['elastica'])]
     private int $age;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
