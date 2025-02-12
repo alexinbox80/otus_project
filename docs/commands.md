@@ -35,3 +35,6 @@ php bin/console doctrine:schema:drop --full-database --force
 
 #Запускаем консьюмер командой \
 php bin/console rabbitmq:consumer add_followers -m 100
+
+#Заполняем индекс командой \
+php bin/console fos:elastica:populate

@@ -66,6 +66,11 @@ services:
 #        platform: linux/arm64/v8
         depends_on:
             - symfony_elasticsearch
+        environment:
+            SERVER_NAME: symfony_kibana
+            ELASTICSEARCH_HOSTS: http://symfony_elasticsearch:9200
+        links:
+            - symfony_elasticsearch
         ports:
             - 5601:5601
         networks:
