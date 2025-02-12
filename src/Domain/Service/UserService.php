@@ -26,6 +26,14 @@ class UserService
     /**
      * @return User[]
      */
+    public function findUsersByQuery(string $query, int $perPage, int $page): array
+    {
+        return $this->userRepository->findUsersByQuery($query, $perPage, $page);
+    }
+
+    /**
+     * @return User[]
+     */
     public function findUsersByLogin(string $login): array
     {
         return $this->userRepository->findUsersByLogin($login);
