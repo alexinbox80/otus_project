@@ -19,15 +19,15 @@ class CommandEventSubscriber implements EventSubscriberInterface
 
     public function onCommand(ConsoleCommandEvent $event): void
     {
-        $command = $event->getCommand();
-        if ($command !== null && $command->getName() === AddFollowersCommand::FOLLOWERS_ADD_COMMAND_NAME) {
-            $input = $event->getInput();
-            $output = $event->getOutput();
-            $helper = $command->getHelper('question');
-            $question = new ConfirmationQuestion('Are you sure want to execute this command?(y/n)', false);
-            if (!$helper->ask($input, $output, $question)) {
-                $event->disableCommand();
-            }
-        }
+//        $command = $event->getCommand();
+//        if ($command !== null && $command->getName() === AddFollowersCommand::FOLLOWERS_ADD_COMMAND_NAME) {
+//            $input = $event->getInput();
+//            $output = $event->getOutput();
+//            $helper = $command->getHelper('question');
+//            $question = new ConfirmationQuestion('Are you sure want to execute this command?(y/n)', false);
+//            if (!$helper->ask($input, $output, $question)) {
+//                $event->disableCommand();
+//            }
+//        }
     }
 }
