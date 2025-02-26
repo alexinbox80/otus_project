@@ -184,13 +184,15 @@ class User implements EntityInterface, SoftDeleteableInterface, SoftDeleteableIn
         $this->isActive = $isActive;
     }
 
-    public function getCreatedAt(): DateTime {
+    public function getCreatedAt(): DateTime
+    {
         return $this->createdAt;
     }
 
     #[ORM\PrePersist]
-    public function setCreatedAt(): void {
-        $this->createdAt = new DateTime();
+    public function setCreatedAt(): void
+    {
+        $this->createdAt = DateTime::createFromFormat('U', (string)time());
     }
 
     public function getUpdatedAt(): DateTime {
@@ -199,8 +201,9 @@ class User implements EntityInterface, SoftDeleteableInterface, SoftDeleteableIn
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
-    public function setUpdatedAt(): void {
-        $this->updatedAt = new DateTime();
+    public function setUpdatedAt(): void
+    {
+        $this->updatedAt = DateTime::createFromFormat('U', (string)time());
     }
 
     public function getDeletedAt(): ?DateTime
