@@ -1,6 +1,6 @@
 services:
     symfony_php-fpm:
-        image: php:8.3-fpm-alpine
+        image: php:8.4-fpm-alpine
         build:
             dockerfile: docker/php-fpm/Dockerfile
         container_name: 'symfony_php-fpm'
@@ -132,7 +132,7 @@ services:
             - net
 
     symfony_supervisor:
-        image: php:8.3-cli-alpine
+        image: php:8.4-cli-alpine
         build: docker/supervisor
         container_name: 'symfony_supervisor'
         volumes:
