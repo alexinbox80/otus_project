@@ -11,6 +11,8 @@ use App\Infrastructure\Repository\UserRepository;
 use Generator;
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionObject;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -27,7 +29,7 @@ class UserServiceTest extends TestCase
     public function testCreate(CreateUserModel $createUserModel, array $expectedData): void
     {
         $userService = $this->prepareUserService();
-        sleep(5);
+        //sleep(5);
 
         $user = $userService->create($createUserModel);
 
@@ -46,6 +48,24 @@ class UserServiceTest extends TestCase
 
     protected function createTestCases(): Generator
     {
+        yield [
+            new CreateUserModel(
+                'someLogin',
+                'somePhone',
+                CommunicationChannelEnum::Phone
+            ),
+            [
+                'class' => PhoneUser::class,
+                'login' => 'someLogin',
+                'email' => null,
+                'phone' => 'somePhone',
+                'passwordHash' => self::PASSWORD_HASH,
+                'age' => self::DEFAULT_AGE,
+                'isActive' => self::DEFAULT_IS_ACTIVE,
+                'roles' => self::DEFAULT_ROLES,
+            ]
+        ];
+
         yield [
             new CreateUserModel(
                 'someLogin',
@@ -88,6 +108,11 @@ class UserServiceTest extends TestCase
         $userRepository = Mockery::mock(UserRepository::class);
         $userRepository->shouldReceive('create')->with(
             Mockery::on(static function($user) {
+//                $reflection = new ReflectionObject($user);
+//                $property = $reflection->getProperty('id');
+//                $property->setAccessible(true);
+//                $property->setValue($user, 1);
+
                 $user->setId(1);
                 $user->setCreatedAt();
                 $user->setUpdatedAt();

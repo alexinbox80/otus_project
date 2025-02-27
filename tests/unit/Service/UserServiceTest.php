@@ -27,7 +27,7 @@ class UserServiceTest extends TestCase
     public function testCreate(CreateUserModel $createUserModel, array $expectedData): void
     {
         $userService = $this->prepareUserService();
-        sleep(5);
+        //sleep(5);
 
         $user = $userService->create($createUserModel);
 
