@@ -326,6 +326,14 @@ class User implements EntityInterface, SoftDeleteableInterface, SoftDeleteableIn
         return $this->subscriptionFollowers->toArray();
     }
 
+    /**
+     * @return Subscription[]
+     */
+    public function getSubscriptionAuthors(): array
+    {
+        return $this->subscriptionAuthors->toArray();
+    }
+
     public function toArray(): array
     {
         return [
