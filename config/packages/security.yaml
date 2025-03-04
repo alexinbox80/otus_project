@@ -59,6 +59,7 @@ security:
         - { path: ^/api/v2/user, roles: ROLE_ADMIN, methods: [ POST ] }
         - { path: ^/api/v1/user, roles: ROLE_ADMIN, methods: [DELETE] }
         - { path: ^/api/v1/get-user-list, roles: ROLE_VIEW, methods: [ GET ] }
+        - { path: ^/api/doc, roles: ROLE_ADMIN }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
