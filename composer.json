@@ -13,6 +13,7 @@
         "doctrine/orm": "^3.3",
         "friendsofsymfony/elastica-bundle": "^6.5",
         "lexik/jwt-authentication-bundle": "^3.1",
+        "nelmio/api-doc-bundle": "^4.37",
         "php-amqplib/rabbitmq-bundle": "^2.17",
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpstan/phpdoc-parser": "^2.0",
