@@ -19,7 +19,7 @@ deploy_server1:
         - ssh -p 2222 $SSH_USER@$SERVER1 "cd /var/www/demo &&
           git clone -b lesson-24 https://github.com/alexinbox80/otus_project.git $DIR &&
           sudo chown www-data:www-data $DIR -R &&
-          sudo chmod 0750 $DIR -R &&
+          sudo chmod 0770 $DIR -R &&
           cd $DIR &&
           sh ./deploy/deploy.sh $SERVER1 $DATABASE_HOST $DATABASE_USER $DATABASE_PASSWORD $DATABASE_NAME $RABBITMQ_HOST $RABBITMQ_USER $RABBITMQ_PASSWORD
           cd .. &&
