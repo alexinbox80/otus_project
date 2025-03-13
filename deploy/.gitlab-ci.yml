@@ -14,6 +14,7 @@ deploy_server1:
     environment:
         name: server1
         url: $SERVER1
+
     script:
         - ssh -p 2222 $SSH_USER@$SERVER1 "cd /var/www/demo &&
           git clone -b lesson-24 https://github.com/alexinbox80/otus_project.git $DIR &&
@@ -26,6 +27,7 @@ deploy_server1:
           ln -s /var/www/demo/shared/log /var/www/demo/$DIR/var/log &&
           ( [ ! -d /var/www/demo/current ] || mv -Tf /var/www/demo/current /var/www/demo/previous ) &&
           ln -s /var/www/demo/$DIR /var/www/demo/current"
+
     only:
         - master
 
