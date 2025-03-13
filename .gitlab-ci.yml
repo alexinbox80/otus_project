@@ -15,7 +15,7 @@ deploy_server1:
         name: server1
         url: $SERVER1
     script:
-        - ssh -p 2222 $SSH_USER@$SERVER1 "cd /var/www/demo &&
+        - ssh $SSH_USER@$SERVER1 "cd /var/www/demo &&
           git clone -b lesson-24 https://github.com/alexinbox80/otus_project.git $DIR &&
           sudo chown www-data:www-data $DIR -R &&
           cd $DIR &&
@@ -31,7 +31,7 @@ deploy_server1:
 rollback:
     stage: rollback
     script:
-        - ssh -p 2222 $SSH_USER@$SERVER1 "unlink /var/www/demo/current &&
+        - ssh $SSH_USER@$SERVER1 "unlink /var/www/demo/current &&
           mv -Tf /var/www/demo/previous /var/www/demo/current &&
           cd /var/www/demo/current &&
           sh ./deploy/rollback.sh $SERVER1"
