@@ -3,30 +3,30 @@ security:
     password_hashers:
         #Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
         App\Domain\Entity\User: auto
-        Symfony\Component\Security\Core\User\InMemoryUser: plaintext
+        #Symfony\Component\Security\Core\User\InMemoryUser: plaintext
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         app_user_provider:
             entity:
                 class: App\Domain\Entity\User
                 property: login
-        users_in_memory:
-            memory:
-                users:
-                    admin:
-                        password: 'my_pass'
-                        roles: 'ROLE_ADMIN'
-                    user:
-                        password: 'other_pass'
-                        roles: 'ROLE_USER'
+#        users_in_memory:
+#            memory:
+#                users:
+#                    admin:
+#                        password: 'my_pass'
+#                        roles: 'ROLE_ADMIN'
+#                    user:
+#                        password: 'other_pass'
+#                        roles: 'ROLE_USER'
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-#        refreshToken:
-#            pattern: ^/api/v1/refresh-token
-#            stateless: true
-#            custom_authenticator: App\Application\Security\ApiTokenAuthenticator
+        refreshToken:
+            pattern: ^/api/v1/refresh-token
+            stateless: true
+            custom_authenticator: App\Application\Security\ApiTokenAuthenticator
         token:
             pattern: ^/api/v1/get-token
             security: false
@@ -34,18 +34,18 @@ security:
             pattern: ^/api-platform$
             security: false
         main:
-            http_basic:
-            lazy: true
-            provider: users_in_memory
+#            http_basic:
 #            lazy: true
-#            stateless: true
-#            custom_authenticator: App\Application\Security\JwtAuthenticator
-#            security: false
-#            form_login:
-#                login_path: app_login
-#                check_path: app_login
-#                enable_csrf: true
-#                default_target_path: app_web_renderuserlist_v1__invoke
+#            provider: users_in_memory
+            lazy: true
+            stateless: true
+            custom_authenticator: App\Application\Security\JwtAuthenticator
+            security: false
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
+                default_target_path: app_web_renderuserlist_v1__invoke
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
