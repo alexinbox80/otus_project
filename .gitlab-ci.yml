@@ -15,7 +15,7 @@ deploy_server1:
           git clone -b lesson-24 https://github.com/alexinbox80/otus_project.git $DIR &&
           sudo chown www-data:www-data $DIR -R &&
           cd $DIR &&
-          sh ./deploy.sh $SERVER1 $DATABASE_HOST $DATABASE_USER $DATABASE_PASSWORD $DATABASE_NAME $RABBITMQ_HOST $RABBITMQ_USER $RABBITMQ_PASSWORD &&
+          sh ./deploy/deploy.sh $SERVER1 $DATABASE_HOST $DATABASE_USER $DATABASE_PASSWORD $DATABASE_NAME $RABBITMQ_HOST $RABBITMQ_USER $RABBITMQ_PASSWORD &&
           cd .. &&
           rm -rf /var/www/demo/$DIR/var/log &&
           ln -s /var/www/demo/shared/log /var/www/demo/$DIR/var/log &&
