@@ -96,12 +96,6 @@ services:
     App\Controller\Web\CreateUser\v2\ManagerInterface:
         alias: App\Controller\Web\CreateUser\v2\ManagerLoggerDecorator
 
-    App\Infrastructure\Storage\MetricsStorage:
-        arguments:
-            - symfony_graphite
-            - 8125
-            - my_app
-
     App\Domain\Repository\TweetRepositoryInterface:
         alias: App\Infrastructure\Repository\TweetRepositoryCacheDecorator
 

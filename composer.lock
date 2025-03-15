@@ -4,8 +4,42 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b15e90f4149593414e56909093d6ffe8",
+    "content-hash": "87580ffcbc0aa86dfe1678d04a5302dd",
     "packages": [
+        {
+            "name": "alexinbox80/statsd-bundle",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alexinbox80/statsd-bundle.git",
+                "reference": "a7d8cc66a376310427b7139a17bf1a9dfe4b096f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alexinbox80/statsd-bundle/zipball/a7d8cc66a376310427b7139a17bf1a9dfe4b096f",
+                "reference": "a7d8cc66a376310427b7139a17bf1a9dfe4b096f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "slickdeals/statsd": "^3.2"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "StatsdBundle\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Provides configure MetricsStorage to send metrics to graphite",
+            "support": {
+                "source": "https://github.com/alexinbox80/statsd-bundle/tree/v0.0.1",
+                "issues": "https://github.com/alexinbox80/statsd-bundle/issues"
+            },
+            "time": "2025-03-15T19:18:50+00:00"
+        },
         {
             "name": "api-platform/core",
             "version": "v4.0.16",

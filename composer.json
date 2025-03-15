@@ -7,6 +7,7 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "alexinbox80/statsd-bundle": "*",
         "api-platform/core": "^4.0",
         "doctrine/doctrine-bundle": "^2.13",
         "doctrine/doctrine-migrations-bundle": "^3.3",
@@ -18,7 +19,6 @@
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpstan/phpdoc-parser": "^2.0",
         "scienta/doctrine-json-functions": "^6.3",
-        "slickdeals/statsd": "^3.2",
         "symfony/cache": "7.1.*",
         "symfony/console": "7.1.*",
         "symfony/dotenv": "7.1.*",
@@ -89,7 +89,11 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.1.*"
+            "require": "7.1.*",
+            "endpoint": [
+                "https://api.github.com/repos/alexinbox80/symfony-recipes/contents/index.json",
+                "flex://defaults"
+            ]
         }
     },
     "require-dev": {
@@ -103,5 +107,11 @@
         "mockery/mockery": "^1.6",
         "symfony/maker-bundle": "^1.62",
         "symfony/phpunit-bridge": "^7.2"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:alexinbox80/statsd-bundle.git"
+        }
+    ]
 }
