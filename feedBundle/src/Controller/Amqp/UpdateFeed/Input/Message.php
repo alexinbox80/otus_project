@@ -1,19 +1,23 @@
 <?php
 
-namespace App\Domain\DTO;
+namespace FeedBundle\Controller\Amqp\UpdateFeed\Input;
 
 use DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
-class UpdateFeedDTO
+class Message
 {
     public function __construct(
+        #[Assert\Type('numeric')]
         public readonly int $id,
         public readonly string $author,
+        #[Assert\Type('numeric')]
         public readonly int $authorId,
         public readonly string $text,
         public readonly DateTime $createdAt,
+        #[Assert\Type('numeric')]
         public readonly int $followerId,
-        public readonly string $followerChannel
+        public readonly string $followerChannel,
     ) {
     }
 }
