@@ -554,10 +554,7 @@
     
     namespace App\Domain\Service;
     
-    use App\Domain\Bus\PublishTweetBusInterface;
-    use App\Domain\Entity\User;
-    use App\Domain\Model\TweetModel;
-    use App\Infrastructure\Repository\FeedRepository;
+use App\Domain\Bus\PublishTweetBusInterface;use App\Domain\Entity\User;use App\Domain\Model\TweetModel;use FeedBundle\Infrastructure\Repository\FeedRepository;
     
     class FeedService
     {
@@ -596,10 +593,7 @@
     
     namespace App\Domain\Service;
     
-    use App\Domain\Entity\Tweet;
-    use App\Domain\Entity\User;
-    use App\Domain\Model\TweetModel;
-    use App\Domain\Repository\TweetRepositoryInterface;
+use App\Domain\Entity\Tweet;use App\Domain\Entity\User;use App\Domain\Model\TweetModel;use App\Domain\Repository\TweetRepositoryInterface;use FeedBundle\Domain\Service\FeedService;
     
     class TweetService
     {
@@ -676,8 +670,7 @@
     
     namespace App\Controller\Web\GetFeed\v1;
     
-    use App\Domain\Entity\User;
-    use App\Domain\Service\FeedService;
+use App\Domain\Entity\User;use FeedBundle\Domain\Service\FeedService;
     
     class Manager
     {
@@ -949,7 +942,7 @@
     
     namespace App\Domain\Bus;
     
-    use App\Domain\DTO\SendNotificationDTO;
+use FeedBundle\Domain\DTO\SendNotificationDTO;
     
     interface SendNotificationBusInterface
     {
@@ -962,10 +955,7 @@
     
     namespace App\Infrastructure\Bus\Adapter;
     
-    use App\Domain\Bus\SendNotificationBusInterface;
-    use App\Domain\DTO\SendNotificationDTO;
-    use App\Infrastructure\Bus\AmqpExchangeEnum;
-    use App\Infrastructure\Bus\RabbitMqBus;
+use App\Domain\Bus\SendNotificationBusInterface;use App\Infrastructure\Bus\AmqpExchangeEnum;use App\Infrastructure\Bus\RabbitMqBus;use FeedBundle\Domain\DTO\SendNotificationDTO;
     
     class SendNotificationRabbitMqBus implements SendNotificationBusInterface
     {
@@ -1012,10 +1002,7 @@
     
     namespace App\Controller\Amqp\PublishTweet;
     
-    use App\Application\RabbitMq\AbstractConsumer;
-    use App\Controller\Amqp\PublishTweet\Input\Message;
-    use App\Domain\Model\TweetModel;
-    use App\Domain\Service\FeedService;
+use App\Application\RabbitMq\AbstractConsumer;use App\Controller\Amqp\PublishTweet\Input\Message;use App\Domain\Model\TweetModel;use FeedBundle\Domain\Service\FeedService;
     
     class Consumer extends AbstractConsumer
     {
@@ -1053,12 +1040,7 @@
     
     namespace App\Domain\Service;
     
-    use App\Domain\Bus\PublishTweetBusInterface;
-    use App\Domain\Bus\SendNotificationBusInterface;
-    use App\Domain\DTO\SendNotificationDTO;
-    use App\Domain\Entity\User;
-    use App\Domain\Model\TweetModel;
-    use App\Infrastructure\Repository\FeedRepository;
+use App\Domain\Bus\PublishTweetBusInterface;use App\Domain\Bus\SendNotificationBusInterface;use App\Domain\Entity\User;use App\Domain\Model\TweetModel;use App\Infrastructure\Repository\FeedRepository;use FeedBundle\Domain\DTO\SendNotificationDTO;
     
     class FeedService
     {
@@ -1236,14 +1218,7 @@
     
     namespace App\Domain\Service;
     
-    use App\Domain\Bus\PublishTweetBusInterface;
-    use App\Domain\Bus\SendNotificationBusInterface;
-    use App\Domain\DTO\SendNotificationDTO;
-    use App\Domain\Entity\EmailUser;
-    use App\Domain\Entity\User;
-    use App\Domain\Model\TweetModel;
-    use App\Domain\ValueObject\CommunicationChannelEnum;
-    use App\Infrastructure\Repository\FeedRepository;
+    use App\Domain\Bus\PublishTweetBusInterface;use App\Domain\Bus\SendNotificationBusInterface;use App\Domain\Entity\EmailUser;use App\Domain\Entity\User;use App\Domain\Model\TweetModel;use App\Domain\ValueObject\CommunicationChannelEnum;use App\Infrastructure\Repository\FeedRepository;use FeedBundle\Domain\DTO\SendNotificationDTO;
     
     class FeedService
     {
@@ -1319,12 +1294,7 @@
     
     namespace App\Controller\Amqp\UpdateFeed;
     
-    use App\Application\RabbitMq\AbstractConsumer;
-    use App\Controller\Amqp\UpdateFeed\Input\Message;
-    use App\Domain\Entity\User;
-    use App\Domain\Model\TweetModel;
-    use App\Domain\Service\FeedService;
-    use App\Domain\Service\UserService;
+    use App\Application\RabbitMq\AbstractConsumer;use App\Controller\Amqp\UpdateFeed\Input\Message;use App\Domain\Entity\User;use App\Domain\Model\TweetModel;use App\Domain\Service\UserService;use FeedBundle\Domain\Service\FeedService;
     
     class Consumer extends AbstractConsumer
     {
@@ -1783,13 +1753,7 @@
     
     namespace App\Controller\Amqp\UpdateFeed;
     
-    use App\Application\RabbitMq\AbstractConsumer;
-    use App\Controller\Amqp\UpdateFeed\Input\Message;
-    use App\Domain\Entity\User;
-    use App\Domain\Model\TweetModel;
-    use App\Domain\Service\FeedService;
-    use App\Domain\Service\UserService;
-    use App\Infrastructure\Storage\MetricsStorage;
+    use App\Application\RabbitMq\AbstractConsumer;use App\Controller\Amqp\UpdateFeed\Input\Message;use App\Domain\Entity\User;use App\Domain\Model\TweetModel;use App\Domain\Service\UserService;use App\Infrastructure\Storage\MetricsStorage;use FeedBundle\Domain\Service\FeedService;
     
     class Consumer extends AbstractConsumer
     {

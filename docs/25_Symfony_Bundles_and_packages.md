@@ -284,13 +284,7 @@
      
      namespace App\Controller\Amqp\UpdateFeed;
      
-     use App\Application\RabbitMq\AbstractConsumer;
-     use App\Controller\Amqp\UpdateFeed\Input\Message;
-     use App\Domain\Entity\User;
-     use App\Domain\Model\TweetModel;
-     use App\Domain\Service\FeedService;
-     use App\Domain\Service\UserService;
-     use StatsdBundle\Storage\MetricsStorageInterface;
+     use App\Application\RabbitMq\AbstractConsumer;use App\Controller\Amqp\UpdateFeed\Input\Message;use App\Domain\Entity\User;use App\Domain\Model\TweetModel;use App\Domain\Service\UserService;use FeedBundle\Domain\Service\FeedService;use StatsdBundle\Storage\MetricsStorageInterface;
      
      class Consumer extends AbstractConsumer
      {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\DTO;
+namespace FeedBundle\Domain\DTO;
 
 use App\Domain\ValueObject\CommunicationChannelEnum;
 
