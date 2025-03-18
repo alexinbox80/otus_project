@@ -7,7 +7,7 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "alexinbox80/statsd-bundle": "*",
+        "alexinbox80/statsd-bundle": "^0.0.1",
         "api-platform/core": "^4.0",
         "doctrine/doctrine-bundle": "^2.13",
         "doctrine/doctrine-migrations-bundle": "^3.3",

@@ -31,3 +31,4 @@ yarn-error.log
 
 /statsdBundle/
 /symfonyRecipes/
+/auth.json
