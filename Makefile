@@ -4,6 +4,9 @@ php:
 nginx:
 	docker exec -it --user=root symfony_nginx bash
 
+supervisor:
+	docker exec -it --user=root symfony_supervisor bash
+
 build:
 	docker compose build
 
@@ -15,3 +18,6 @@ start:
 
 stop:
 	docker compose stop
+
+rsupervisor:
+	docker compose restart symfony_supervisor
