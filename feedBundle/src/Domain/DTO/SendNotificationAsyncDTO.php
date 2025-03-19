@@ -2,7 +2,7 @@
 
 namespace FeedBundle\Domain\DTO;
 
-class SendNotificationDTO
+class SendNotificationAsyncDTO
 {
     public function __construct(
         public readonly int $userId,
