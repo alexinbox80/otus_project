@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 # Install dev dependencies
 RUN apk update \
@@ -25,6 +25,9 @@ RUN apk update \
         freetype-dev \
         postgresql-dev \
         linux-headers \
+        libmemcached-dev \
+        rabbitmq-c \
+        rabbitmq-c-dev \
         curl \
         wget \
         bash
@@ -38,14 +41,18 @@ RUN docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) \
     intl \
     gd \
     bcmath \
+    pcntl \
     pdo_pgsql \
     sockets \
     zip
-
 RUN pecl channel-update pecl.php.net \
     && pecl install -o -f \
+        amqp \
+        memcached \
         redis \
         event \
     && rm -rf /tmp/pear \
+    && echo "extension=amqp.so" > /usr/local/etc/php/conf.d/amqp.ini \
     && echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini \
-    && echo "extension=event.so" > /usr/local/etc/php/conf.d/event.ini
+    && echo "extension=event.so" > /usr/local/etc/php/conf.d/event.ini \
+    && echo "extension=memcached.so" > /usr/local/etc/php/conf.d/memcached.ini
