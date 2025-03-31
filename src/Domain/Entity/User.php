@@ -2,47 +2,25 @@
 
 namespace App\Domain\Entity;
 
-use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
-use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GraphQl\Query;
 use ApiPlatform\Metadata\GraphQl\QueryCollection;
 use ApiPlatform\Metadata\Post;
-use App\Application\Doctrine\UserRepository;
 use App\Controller\Web\CreateUser\v2\Input\CreateUserDTO;
 use App\Controller\Web\CreateUser\v2\Output\CreatedUserDTO;
 use App\Domain\ApiPlatform\GraphQL\Resolver\UserCollectionResolver;
 use App\Domain\ApiPlatform\GraphQL\Resolver\UserResolver;
-use App\Domain\ApiPlatform\JsonFilter;
 use App\Domain\ApiPlatform\State\UserProcessor;
-use App\Domain\ApiPlatform\State\UserProviderDecorator;
-use App\Domain\ValueObject\CommunicationChannelEnum;
 use App\Domain\ValueObject\RoleEnum;
+use App\Domain\ValueObject\UserLogin;
 use DateInterval;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-//use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
 
-
-#[ORM\Table(name: '`user`')]
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\HasLifecycleCallbacks]
-#[ORM\InheritanceType('JOINED')] //SINGLE_TABLE
-#[ORM\DiscriminatorColumn(name: 'communication_channel', type: 'string', enumType: CommunicationChannelEnum::class)]
-#[ORM\DiscriminatorMap(
-    [
-        CommunicationChannelEnum::Email->value => EmailUser::class,
-        CommunicationChannelEnum::Phone->value => PhoneUser::class,
-    ]
-)]
-#[ORM\UniqueConstraint(name: 'user__login__uniq', columns: ['login'], options: ['where' => '(deleted_at IS NULL)'])]
 #[ApiResource(
     graphQlOperations: [
         new Query(),
@@ -55,74 +33,50 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
     ]
 )]
-#[ApiFilter(SearchFilter::class, properties: ['login' => 'partial'])]
-#[ApiFilter(RangeFilter::class, properties: ['age'])]
-//#[ApiFilter(JsonFilter::class, properties: ['roles.type' => ['type' => 'string', 'strategy' => 'exact']])]
-#[ApiFilter(JsonFilter::class, properties: ['roles.type' => ['type' => 'string', 'strategy' => 'iend']])]
-//#[Post(input: CreateUserDTO::class, output: CreatedUserDTO::class, processor: UserProcessor::class)]
-//#[Get(output: CreatedUserDTO::class, provider: UserProviderDecorator::class)]
-class User implements EntityInterface, SoftDeleteableInterface, SoftDeleteableInFutureInterface, UserInterface, PasswordAuthenticatedUserInterface
+#[Post(input: CreateUserDTO::class, output: CreatedUserDTO::class, processor: UserProcessor::class)]
+class User implements
+    EntityInterface,
+    HasMetaTimestampsInterface,
+    SoftDeleteableInterface,
+    SoftDeleteableInFutureInterface,
+    UserInterface,
+    PasswordAuthenticatedUserInterface
 {
-    #[ORM\Column(name: 'id', type: 'bigint', unique: true)]
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Groups(['elastica'])]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 32, nullable: false)]
-//    #[Groups(['subscription:get'])]
     #[Groups(['elastica'])]
-    private string $login;
+    private UserLogin $login;
 
-    #[ORM\Column(type: 'string', nullable: false)]
+    private DateTime $createdAt;
+
+    private DateTime $updatedAt;
+
+    private Collection $tweets;
+
+    private Collection $authors;
+
+    private Collection $followers;
+
+    private Collection $subscriptionAuthors;
+
+    private Collection $subscriptionFollowers;
+
+    private ?DateTime $deletedAt = null;
+
+    private ?string $avatarLink = null;
+
     private string $password;
 
-    #[ORM\Column(type: 'integer', nullable: false)]
-//    #[Groups(['subscription:get'])]
     #[Groups(['elastica'])]
     private int $age;
 
-    #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $isActive;
 
-    #[ORM\Column(type: 'string', length: 32, unique: true, nullable: true)]
-    private ?string $token = null;
-
-    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
-    private DateTime $createdAt;
-
-    #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: false)]
-    private DateTime $updatedAt;
-
-    #[ORM\OneToMany(targetEntity: Tweet::class, mappedBy: 'author')]
-    private Collection $tweets;
-
-    #[ORM\ManyToMany(targetEntity: 'User', mappedBy: 'followers')]
-    private Collection $authors;
-
-    #[ORM\ManyToMany(targetEntity: 'User', inversedBy: 'authors')]
-    #[ORM\JoinTable(name: 'author_follower')]
-    #[ORM\JoinColumn(name: 'author_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'follower_id', referencedColumnName: 'id')]
-    private Collection $followers;
-
-    #[ORM\OneToMany(mappedBy: 'follower', targetEntity: 'Subscription')]
-    private Collection $subscriptionAuthors;
-
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: 'Subscription')]
-    private Collection $subscriptionFollowers;
-
-    #[ORM\Column(name: 'deleted_at', type: 'datetime', nullable: true)]
-    private ?DateTime $deletedAt = null;
-
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $avatarLink = null;
-
-    #[ORM\Column(type: 'json', length: 1024, nullable: false)]
-    #[Groups(['subscription:get'])]
     private array $roles = [];
 
-    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?string $token = null;
+
     private ?bool $isProtected;
 
     public function __construct()
@@ -144,44 +98,14 @@ class User implements EntityInterface, SoftDeleteableInterface, SoftDeleteableIn
         $this->id = $id;
     }
 
-    public function getLogin(): string
+    public function getLogin(): UserLogin
     {
         return $this->login;
     }
 
-    public function setLogin(string $login): void
+    public function setLogin(UserLogin $login): void
     {
         $this->login = $login;
-    }
-
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
-    }
-
-    public function getAge(): int
-    {
-        return $this->age;
-    }
-
-    public function setAge(int $age): void
-    {
-        $this->age = $age;
-    }
-
-    public function isActive(): bool
-    {
-        return $this->isActive;
-    }
-
-    public function setIsActive(bool $isActive): void
-    {
-        $this->isActive = $isActive;
     }
 
     public function getCreatedAt(): DateTime
@@ -189,18 +113,16 @@ class User implements EntityInterface, SoftDeleteableInterface, SoftDeleteableIn
         return $this->createdAt;
     }
 
-    #[ORM\PrePersist]
     public function setCreatedAt(): void
     {
         $this->createdAt = DateTime::createFromFormat('U', (string)time());
     }
 
-    public function getUpdatedAt(): DateTime {
+    public function getUpdatedAt(): DateTime
+    {
         return $this->updatedAt;
     }
 
-    #[ORM\PrePersist]
-    #[ORM\PreUpdate]
     public function setUpdatedAt(): void
     {
         $this->updatedAt = DateTime::createFromFormat('U', (string)time());
@@ -214,6 +136,16 @@ class User implements EntityInterface, SoftDeleteableInterface, SoftDeleteableIn
     public function setDeletedAt(): void
     {
         $this->deletedAt = new DateTime();
+    }
+
+    public function getAvatarLink(): ?string
+    {
+        return $this->avatarLink;
+    }
+
+    public function setAvatarLink(?string $avatarLink): void
+    {
+        $this->avatarLink = $avatarLink;
     }
 
     public function setDeletedAtInFuture(DateInterval $dateInterval): void
@@ -259,14 +191,34 @@ class User implements EntityInterface, SoftDeleteableInterface, SoftDeleteableIn
         }
     }
 
-    public function getAvatarLink(): ?string
+    public function getPassword(): string
     {
-        return $this->avatarLink;
+        return $this->password;
     }
 
-    public function setAvatarLink(?string $avatarLink): void
+    public function setPassword(string $password): void
     {
-        $this->avatarLink = $avatarLink;
+        $this->password = $password;
+    }
+
+    public function getAge(): int
+    {
+        return $this->age;
+    }
+
+    public function setAge(int $age): void
+    {
+        $this->age = $age;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): void
+    {
+        $this->isActive = $isActive;
     }
 
     /**
@@ -289,15 +241,6 @@ class User implements EntityInterface, SoftDeleteableInterface, SoftDeleteableIn
         $this->roles = $roles;
     }
 
-    public function eraseCredentials(): void
-    {
-    }
-
-    public function getUserIdentifier(): string
-    {
-        return $this->login;
-    }
-
     public function getToken(): ?string
     {
         return $this->token;
@@ -308,19 +251,18 @@ class User implements EntityInterface, SoftDeleteableInterface, SoftDeleteableIn
         $this->token = $token;
     }
 
-    public function isProtected(): bool
+    public function eraseCredentials(): void
     {
-        return $this->isProtected ?? false;
     }
 
-    public function setIsProtected(bool $isProtected): void
+    public function getUserIdentifier(): string
     {
-        $this->isProtected = $isProtected;
+        return $this->login;
     }
 
     /**
-        * @return Subscription[]
-    */
+     * @return Subscription[]
+     */
     public function getSubscriptionFollowers(): array
     {
         return $this->subscriptionFollowers->toArray();
@@ -334,29 +276,38 @@ class User implements EntityInterface, SoftDeleteableInterface, SoftDeleteableIn
         return $this->subscriptionAuthors->toArray();
     }
 
+    public function isProtected(): bool
+    {
+        return $this->isProtected ?? false;
+    }
+
+    public function setIsProtected(bool $isProtected): void
+    {
+        $this->isProtected = $isProtected;
+    }
+
     public function toArray(): array
     {
         return [
-            'id' => $this->getId(),
-            'login' => $this->getLogin(),
-            'avatar' => $this->getAvatarLink(),
-            'createdAt' => $this->getCreatedAt()->format('Y-m-d H:i:s'),
-            'updatedAt' => $this->getUpdatedAt()->format('Y-m-d H:i:s'),
+            'id' => $this->id,
+            'login' => $this->login,
+            'avatar' => $this->avatarLink,
+            'createdAt' => $this->createdAt->format('Y-m-d H:i:s'),
+            'updatedAt' => $this->updatedAt->format('Y-m-d H:i:s'),
             'tweets' => array_map(static fn(Tweet $tweet) => $tweet->toArray(), $this->tweets->toArray()),
-            'roles' => $this->getRoles(),
             'followers' => array_map(
-                static fn(User $user) => ['id' => $user->getId(), 'login' => $user->getLogin()],
+                static fn(User $user) => ['id' => $user->getId(), 'login' => $user->getLogin()->getValue()],
                 $this->followers->toArray()
             ),
             'authors' => array_map(
-                static fn(User $user) => ['id' => $user->getId(), 'login' => $user->getLogin()],
+                static fn(User $user) => ['id' => $user->getId(), 'login' => $user->getLogin()->getValue()],
                 $this->authors->toArray()
             ),
             'subscriptionFollowers' => array_map(
                 static fn(Subscription $subscription) => [
                     'subscriptionId' => $subscription->getId(),
                     'userId' => $subscription->getFollower()->getId(),
-                    'login' => $subscription->getFollower()->getLogin(),
+                    'login' => $subscription->getFollower()->getLogin()->getValue(),
                 ],
                 $this->subscriptionFollowers->toArray()
             ),
@@ -364,7 +315,7 @@ class User implements EntityInterface, SoftDeleteableInterface, SoftDeleteableIn
                 static fn(Subscription $subscription) => [
                     'subscriptionId' => $subscription->getId(),
                     'userId' => $subscription->getAuthor()->getId(),
-                    'login' => $subscription->getAuthor()->getLogin(),
+                    'login' => $subscription->getAuthor()->getLogin()->getValue(),
                 ],
                 $this->subscriptionAuthors->toArray()
             ),

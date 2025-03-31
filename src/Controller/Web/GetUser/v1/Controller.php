@@ -16,7 +16,7 @@ class Controller
     public function __construct(private readonly Manager $manager) {
     }
 
-    #[IsGranted('ROLE_GET_LIST')]
+    //#[IsGranted('ROLE_GET_LIST')]
     #[Route(path: 'api/v1/user', methods: ['GET'])]
     public function __invoke(Request $request): Response
     {

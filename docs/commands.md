@@ -28,7 +28,7 @@ php bin/console debug:router
 
 #schema validate \
 php bin/console doctrine:schema:validate \
-doctrine:schema:update --dump-sql
+php bin/console doctrine:schema:update --dump-sql
 
 #drop all tables in database \
 php bin/console doctrine:schema:drop --full-database --force
