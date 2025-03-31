@@ -109,6 +109,7 @@
         "codeception/module-rest": "^3.4",
         "codeception/module-symfony": "^3.5",
         "mockery/mockery": "^1.6",
+        "qossmic/deptrac-shim": "^1.0",
         "symfony/maker-bundle": "^1.62",
         "symfony/phpunit-bridge": "^7.2"
     },
