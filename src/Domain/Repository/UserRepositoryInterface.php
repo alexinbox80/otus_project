@@ -3,6 +3,7 @@
 namespace App\Domain\Repository;
 
 use App\Domain\Entity\User;
+use DateInterval;
 use Doctrine\ORM\NonUniqueResultException;
 
 interface UserRepositoryInterface
