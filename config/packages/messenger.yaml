@@ -7,6 +7,12 @@ framework:
                     - doctrine_close_connection
                     - doctrine_transaction
         transports:
+            create_user:
+                dsn: "%env(MESSENGER_AMQP_TRANSPORT_DSN)%"
+                options:
+                    exchange:
+                        name: 'old_sound_rabbit_mq.create_user'
+                        type: direct
             doctrine:
                 dsn: "%env(MESSENGER_DOCTRINE_TRANSPORT_DSN)%"
                 serializer: 'messenger.transport.symfony_serializer'
@@ -21,7 +27,7 @@ framework:
 
         routing:
             App\Domain\DTO\AddFollowersDTO: add_followers
-            App\Domain\Command\CreateUser\Command: sync
+            App\Domain\Command\CreateUser\Command: create_user
         # Route your messages to the transports
         # 'App\Message\YourMessage': async
 
