@@ -410,12 +410,7 @@
     
     namespace App\Controller\Web\GetFeed\v1;
     
-    use App\Application\Query\QueryBusInterface;
-    use App\Controller\Web\GetFeed\v1\Output\Response;
-    use App\Controller\Web\GetFeed\v1\Output\TweetDTO;
-    use App\Domain\Entity\User;
-    use App\Domain\Query\GetFeed\Query;
-    use App\Domain\Query\GetFeed\Result;
+    use App\Application\Query\QueryBusInterface;use App\Controller\Web\GetFeed\v1\Output\Response;use App\Controller\Web\GetFeed\v1\Output\TweetDTO;use App\Domain\Entity\User;use App\Domain\Query\GetFeed\Query;use App\Domain\Query\GetFeed\Result;
     
     class Manager
     {
