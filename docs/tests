@@ -1,0 +1,5 @@
+./vendor/bin/simple-phpunit
+
+./vendor/bin/simple-phpunit tests
+
+vendor/bin/simple-phpunit tests/unit/Controller/Cli/AddFollowersCommandTest.php
