@@ -1,0 +1,3 @@
+vendor/bin/deptrac --clear-cache
+
+vendor/bin/deptrac --formatter=baseline

@@ -1,0 +1,10 @@
+docker compose up -d
+
+docker compose build
+
+docker compose ps
+
+docker exec -it --user=www-data symfony_php-fpm bash
+
+#restart supervisor
+docker compose restart symfony_supervisor
