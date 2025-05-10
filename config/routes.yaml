@@ -4,6 +4,7 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-hello_world:
-    path: /world/hello
-    controller: App\Controller\WorldController::hello
+app.swagger_ui_areas:
+    path: /api/doc/{area}
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
